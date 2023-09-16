@@ -15,7 +15,7 @@ export function App() {
   const { data, isError, isLoading } = useContractReads({
     contracts: [
       {
-        address: "<YOUR_CONTRACT_ADDRESS_HERE>",
+        address: "0xe662f8C49Dddd43A8CdCA0290Eb5E4D8110DDb62",
         abi: boardABI,
         functionName: "getColor",
         args: [coord.x - 1, coord.y - 1],

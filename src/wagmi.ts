@@ -8,7 +8,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, ...(import.meta.env?.MODE === 'development' ? [goerli, sepolia] : [])],
   [
-    alchemyProvider({ apiKey: "<PUT_YOUR_ALCHEMY_KEY_HERE_>" }),  // 
+    alchemyProvider({ apiKey: "daLDU9ODorPwEE8CEULnyzI4UNdtYEK7" }),  // 
     publicProvider(),
   ],
 )
