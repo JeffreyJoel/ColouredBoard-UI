@@ -5,24 +5,45 @@ import "./assets/styles.css";
 import { useState, useEffect } from "react";
 import boardABI from "../src/board.json";
 
-export function App() {
-  const { isConnected } = useAccount();
-  const [coord, setCoord] = useState({ x: 1, y: 1 });
+// Define the types for each variable
+type Coord = {
+  x: number;
+  y: number;
+};
 
-  const { data, isError, isLoading } = useContractReads({
-    contracts: [
+type Data = {
+  result: string;
+};
+
+type Contract = {
+  address: any;
+  abi: any;
+  functionName: string;
+  args: number[];
+};
+
+export function App() {
+  const { isConnected }: { isConnected: boolean } = useAccount();
+  const [coord, setCoord]: [Coord, (coord: Coord) => void] = useState({
+    x: 1,
+    y: 1,
+  });
+
+  const { data, isError, isLoading }: { data?: Data[]; isError: boolean; isLoading: boolean } = useContractReads({
+    
+    contracts:  [
       {
         address: "0xe662f8C49Dddd43A8CdCA0290Eb5E4D8110DDb62",
         abi: boardABI,
         functionName: "getColor",
         args: [coord.x - 1, coord.y - 1],
       },
-    ],
+    ] as Contract[],
   });
 
-  let cellColor = "white";
-  let cellTextColor = "black";
-  let boardResult = data ? data[0]?.result : 1;
+  let cellColor: string = "white";
+  let cellTextColor: string = "black";
+  let boardResult: string = data ? data[0]?.result : "1";
 
   useEffect(() => {
     if (boardResult === "black") {
@@ -39,11 +60,11 @@ export function App() {
     }
   }, [boardResult, coord.x, coord.y]);
 
-  const handleCellClick = (rowValue, colValue) => {
+  const handleCellClick = (rowValue: number, colValue: number) => {
     setCoord({ x: rowValue, y: colValue });
   };
 
-  const Board = ({ disable }) => {
+  const Board = ({ disable }: { disable: boolean }) => {
     return (
       <div className="board">
         {[1, 2, 3, 4, 5, 6, 7].map((colElem) => (
